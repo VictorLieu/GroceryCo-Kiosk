@@ -83,7 +83,7 @@ Some unit tests utilizing the NUnit framework have also been added to test funct
 
 # Limitations/Assumptions
 * A text file named `cart.txt` exists under the data directory containing items to be checked out
-* The users cart is not empty (cart.txt is not empty)
+* The users cart is not empty (`cart.txt` is not empty)
 * All items in the cart exist in the catalog
 * A JSON file named `priceCatalog.json` exists under the data directory
 * When a catalog item is not on sale, the salePrice value will be `N/A`
