@@ -1,0 +1,19 @@
+[
+  {
+    "name": "apple",
+    "price": "$2.50",
+    "salePrice": "$2.00"
+  },
+
+  {
+    "name": "orange",
+    "price": "$3.50",
+    "salePrice": "$3.00"
+  },
+
+  {
+    "name": "banana",
+    "price": "$4.00",
+    "salePrice": "$3.50"
+  }
+]
