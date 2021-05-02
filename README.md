@@ -72,8 +72,7 @@ Total: $11.00
 
 
 # Additional Notes
-Source code for the project exists under `/src`, and data (item catalog, cart text file) exists under `/data`. 
-Some unit tests utilizing the NUnit framework have also been added to test functionalities against different input combinations (ex. duplicates of an item). These tests can be found under `/GroceryKioskTests`. The following NuGet packages have also been added to the project: </br>
+Source code for the project exists under `/src`, and data (item catalog, cart text file) exists under `/data`. A `StringUtils.cs` class which contains static methods can be used to format price strings. This can be found under `/utils`. Some unit tests utilizing the NUnit framework have also been added to test functionalities against different input combinations (ex. duplicates of an item). These tests can be found under `/GroceryKioskTests`. The following NuGet packages have also been added to the project: </br>
 * **Microsoft.Extensions.Hosting** - Used for startup configurations
 * **Serilog** - For logging information during the checkout process, and also logging errors to console when exceptions are thrown
 * **Newtonsoft.Json** - Used to desearlize `priceCatalog.json` file
