@@ -81,8 +81,9 @@ Source code for the project exists under `/src`, and data (item catalog, cart te
 
 
 # Limitations/Assumptions
+* Prices in catalog are non-negative and > $0.00
 * A text file named `cart.txt` exists under the data directory containing items to be checked out
-* The users cart is not empty (`cart.txt` is not empty)
+* The users cart is not empty (`cart.txt` is not empty, and contains at least one item)
 * All items in the cart exist in the catalog
 * A JSON file named `priceCatalog.json` exists under the data directory
 * When a catalog item is not on sale, the salePrice value will be `N/A`
