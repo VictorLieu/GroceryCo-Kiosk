@@ -1,9 +1,9 @@
 # Design
-This checkout system was designed to be run by a driver class (Program.cs). The driver executes each step of the 
-checkout process in the following order: scan items, do price calculations, print receipt to console. The functionality of this checkout system has been split into three services: ScanningService, PriceCalculationService, and the ReceiptService. 
+This checkout system was designed to be run by a driver class (Program.cs). The driver executes each step of the checkout process in the following order: scan items, perform price calculations, print receipt to console. Since there are three main functionalities, the checkout system has been split into three services: ScanningService, PriceCalculationService, and the ReceiptService. 
 
 ### Scanning (ScanningService)
-A simple text file named "cart.txt" is read from, which represents the users cart (this is essentially the scanning phase). 
+The ScanningService reads in data from a text file which is supposed to represent a cart holding items that will be checked out. 
+The text file is assumed to be named "cart.txt", and is stored under /data. An example of the contents of cart.txt can be seen below:
 ```
 Apple
 Banana
@@ -12,7 +12,7 @@ Orange
 ```
 
 ### Price Calculation (PriceCalculationService)
-After the items are scanned, the total price of all items in the cart is calculated. The program does this by referrencing prices which come from the "priceCatalog.json" file, which is formatted in the following way: 
+The PriceCalculation service mainly focuses on calculating the total price of all cart items that were scanned, as well as the creation of objects used to represent each cart item (to be used by the ReceiptService). After the items are scanned, the total price of all items in the cart is calculated. The program does this by referrencing prices which come from the "priceCatalog.json" file, which is formatted as follows: 
 ```
 [
   {
@@ -34,7 +34,13 @@ After the items are scanned, the total price of all items in the cart is calcula
   }
 ]
 ```
-The catalog can be extended by adding new JSON objects to this file. This catalog is abstracted into the program as hashtables to help each catalog item to its respective prices. The PriceCalculation service also creates an object representing each item in the cart, which contains properties such as price, salePrice and quantity of the item in the cart. 
+The catalog can be extended by adding new JSON objects to this file. This catalog is abstracted into the program as two hashtables, one hashtable contains item names as keys and regular prices as values, while the other also contains item names as keys but has sale prices as its values. This is done to help map each catalog item to its respective regular and sale price (ex. the hashtable storing sale prices may contain an entry with a key value of "apple" and a price of "$2.00"). The PriceCalculation service also creates objects of the type **Item** which represent each item in the cart. This is done to associate each item in the cart with an object that holds the appropriate data for it. Each of these objects contains properties such as price, salePrice and quantity of the item in the cart. For example, if there are two apples that were scanned from the cart, an apple object will be initialized with the following fields (assume we are following the price catilog above): </br>
+* name: "apple"
+* price: "$2.50"
+* salePrice: "$2.00"
+* quantity: 2 
+</br>
+
 
 ### Printing the receipt (ReceiptService)
 The final step in the process is the print the receipt out. A simple receipt containing the total amount due, each item name, item quantity, regular price, and sale price of each item is shown. Logging messages are also printed to the console when each item was scanned (via Serilog). 
@@ -63,15 +69,20 @@ Total: $11.00
 ```
 
 # Additional Notes
-Some unit tests utilizing the NUnit framework have also been added to test the functionalities of certain features in this checkout system. The following NuGet packages have also been added to the project: </br>
+Source code for the project exists under /src, and data (item catalog, cart text file) exist under /data. 
+Some unit tests utilizing the NUnit framework have also been added to test functionalities against different input combinations (ex. duplicates of an item). These tests can be found under /GroceryKioskTests. The following NuGet packages have also been added to the project: </br>
 * **Microsoft.Extensions.Hosting** - Used for startup configurations
 * **Serilog** - For logging information during checkout process, and also logging errors to cosole when exceptions are thrown
-* **Newtonsoft.Json** - Used to desearlize itemCatalog.json file
+* **Newtonsoft.Json** - Used to desearlize priceCatalog.json file
+* **NUnit** - Used as the unit testing framework
+* **Moq** - Used to mock objects for unit tests
 
 
-# Assumptions
+# Limitations/Assumptions
 * A text file named "cart.txt" exists under the data directory containing items to be checked out
 * The users cart is not empty (cart.txt is not empty)
 * All items in the cart exist in the catalog
-* A JSON file named "itemCatalog.json" exists under the data directory
+* A JSON file named "priceCatalog.json" exists under the data directory
 * When a catalog item is not on sale, the salePrice value will be "N/A"
+* Invalid filepath/file name exceptions will be logged to console as erorrs and the program will terminate
+* cart and priceCatalog files for tests are located under /testData
