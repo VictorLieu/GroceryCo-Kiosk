@@ -1,6 +1,7 @@
 # Design
 This checkout system was designed to be run by a driver class (Program.cs). The driver executes each step of the checkout process in the following order: scan items, perform price calculations, print receipt to console. Since there are three main functionalities, the checkout system has been split into three services: ScanningService, PriceCalculationService, and the ReceiptService. 
 
+
 ### Scanning (ScanningService)
 The ScanningService reads in data from a text file which is supposed to represent a cart holding items that will be checked out. 
 The text file is assumed to be named "cart.txt", and is stored under /data. An example of the contents of cart.txt can be seen below:
@@ -10,6 +11,7 @@ Banana
 Apple
 Orange
 ```
+
 
 ### Price Calculation (PriceCalculationService)
 The PriceCalculation service mainly focuses on calculating the total price of all cart items that were scanned, as well as the creation of objects used to represent each cart item (to be used by the ReceiptService). After the items are scanned, the total price of all items in the cart is calculated. The program does this by referrencing prices which come from the "priceCatalog.json" file, which is formatted as follows: 
@@ -67,6 +69,7 @@ Applied sale price: $2.00
 ==============================
 Total: $11.00
 ```
+
 
 # Additional Notes
 Source code for the project exists under /src, and data (item catalog, cart text file) exist under /data. 
